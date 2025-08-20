@@ -1,0 +1,216 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block content %}
+ <main class="main">
+
+    
+    <!-- Cart Section -->
+    <section id="cart" class="cart section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="row">
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+            <div class="cart-items">
+              <div class="cart-header d-none d-lg-block">
+                <div class="row align-items-center">
+                  <div class="col-lg-6">
+                    <h5>Product</h5>
+                  </div>
+                  <div class="col-lg-2 text-center">
+                    <h5>Price</h5>
+                  </div>
+                  <div class="col-lg-2 text-center">
+                    <h5>Quantity</h5>
+                  </div>
+                  <div class="col-lg-2 text-center">
+                    <h5>Total</h5>
+                  </div>
+                </div>
+              </div>
+                {% for cart_item in cart_items %}
+                <!-- Cart Item 1 -->
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 col-12 mt-3 mt-lg-0 mb-lg-0 mb-3">
+                            <div class="product-info d-flex align-items-center">
+                                <div class="product-image">
+                                    <img src="{{cart_item.product.productimage.url}}" alt="Product" class="img-fluid" loading="lazy">
+                                </div>
+                                <div class="product-details">
+                                    <h6 class="product-title">{{cart_item.product.name}}</h6>
+                                    <div class="product-meta">
+                                          <span class="product-color">${{cart_item.product.price}}</span> 
+                                        <span class="product-size">{{cart_item.quantity}}</span> 
+                                    </div>
+                                    <form action="{% url "cart:remove" %}" method="POST">
+                                        {% csrf_token %}
+                                           <input type="hidden" value="{{cart_item.id}}" name="item_id">
+                                            <button class="" type="submit">
+                                              <i class="bi bi-trash"></i> Remove
+                                            </button>
+                                             
+                                               {% comment %} <button class="btn btn-denger" type="submit"> x</button>  {% endcomment %}
+                                       </form>
+                                    {% comment %} <button class="remove-item" type="button">
+                          <i class="bi bi-trash"></i> Remove
+                        </button> {% endcomment %}
+                      </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="price-tag">
+                        <span class="current-price">${{cart_item.total_price}}</span>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="quantity-selector">
+
+                        <form action="{% url "cart:reduce" %}" method="POST">
+                          {% csrf_token %}
+                          <input type="hidden" value="{{cart_item.id}}" name="item_id">
+                          <button class="">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                        </form>
+                       
+                        <input type="number" class="quantity-input" value="{{cart_item.quantity}}" min="1" max="1000000">
+                        <form action="{% url "cart:increase" %}" method="POST">
+                          {% csrf_token %}
+                         
+                          <input type="hidden" value="{{cart_item.id}}" name="item_id">
+                          <button class="">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="col-lg-2 col-12 mt-3 mt-lg-0 text-center">
+                    <div class="item-total">
+                        <span>${{cart_item.total_price}}</span>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Cart Item -->
+        {% endfor %}
+
+         
+
+              <div class="cart-actions">
+                <div class="row">
+                  <div class="col-lg-6 mb-3 mb-lg-0">
+                    <div class="coupon-form">
+                      <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Coupon code">
+                        <button class="btn btn-outline-accent" type="button">Apply Coupon</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 text-md-end">
+                    {% comment %} <button class="btn btn-outline-heading me-2">
+                      <i class="bi bi-arrow-clockwise"></i> Update Cart
+                    </button> {% endcomment %}
+                   
+                    {% comment %} <button class="btn btn-outline-remove">
+                      <i class="bi bi-trash"></i> Clear Cart
+                    </button> {% endcomment %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <div class="cart-summary">
+              {% comment %} <h4 class="summary-title">Order Summary</h4> {% endcomment %}
+
+              <div class="summary-item">
+                <span class="summary-label"></span>
+                <span class="summary-value"> 
+                  {{cart_item.total_price}}
+                </span>
+              </div>
+              <div class="summary-item shipping-item">
+                <span class="summary-label"></span>
+                <div class="shipping-options">
+                  {% comment %} <div class="form-check text-end">
+                    <input class="form-check-input" type="radio" name="shipping" id="standard" checked="">
+                    <label class="form-check-label" for="standard">
+                     
+                    </label>
+                  </div> {% endcomment %}
+                  {% comment %} <div class="form-check text-end">
+                    <input class="form-check-input" type="radio" name="shipping" id="express">
+                    <label class="form-check-label" for="express">
+                      Express Delivery - $12.99
+                    </label>
+                  </div> {% endcomment %}
+                  {% comment %} <div class="form-check text-end">
+                    <input class="form-check-input" type="radio" name="shipping" id="free">
+                    <label class="form-check-label" for="free">
+                      Free Shipping (Orders over $300)
+                    </label>
+                  </div> {% endcomment %}
+                </div>
+              </div>
+
+              {% comment %} <div class="summary-item">
+                <span class="summary-label">Tax</span>
+                <span class="summary-value">$27.00</span> 
+              </div> {% endcomment %}
+
+              {% comment %} <div class="summary-item discount">
+                <span class="summary-label">Discount</span>
+                <span class="summary-value">-$0.00</span>
+              </div> {% endcomment %}
+
+              <div class="summary-total">
+                <span class="summary-label">Total</span>
+                <span class="summary-value">${{total_price}}</span>
+              </div>  
+
+              <form action="{% url "cart:order" %}" method="POST">
+                {% csrf_token %}
+                <div class="checkout-button">
+                  <button class="btn btn-accent w-100" type="submit" >Proceed to Checkout <i class="bi bi-arrow-right"></i></button>
+                 {% comment %} <a href="#" class="btn btn-accent w-100">
+                  Proceed to Checkout <i class="bi bi-arrow-right"></i>
+                </a>  {% endcomment %}
+              </div>
+
+              </form>
+              
+              {% comment %} <div class="checkout-button">
+                <a href="#" class="btn btn-accent w-100">
+                  Proceed to Checkout <i class="bi bi-arrow-right"></i>
+                </a>
+              </div> {% endcomment %}
+
+              <div class="continue-shopping">
+                <a href="{% url "product:home" %}" class="btn btn-link w-100">
+                  <i class="bi bi-arrow-left"></i> Continue Shopping
+                </a>
+              </div>
+
+              <div class="payment-methods">
+                <p class="payment-title">We Accept</p>
+                <div class="payment-icons">
+                  <i class="bi bi-credit-card"></i>
+                  <i class="bi bi-paypal"></i>
+                  <i class="bi bi-wallet2"></i>
+                  <i class="bi bi-bank"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /Cart Section -->
+
+  </main>
+
+{% endblock content %}
+
