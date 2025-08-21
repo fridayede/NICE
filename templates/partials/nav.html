@@ -1,5 +1,31 @@
 {% comment %}  {% endcomment %}<body class="index-page">
 {% load static %}
+<style>
+  .custom-alert {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1e1e1e;
+    color: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+  }
+</style>
+
+
+
   <header id="header" class="header sticky-top">
     <!-- Top Bar -->
     <div class="top-bar py-2">
@@ -33,7 +59,7 @@
                 <div class="swiper-slide">🎁 20% off on your first order</div>
               </div>
             </div>
-          </div
+          </div>
 
           <div class="col-lg-4 d-none d-lg-block">
             <div class="d-flex justify-content-end">
@@ -96,29 +122,37 @@
                   </a>
                   <a class="dropdown-item d-flex align-items-center" href="account.html">
                     <i class="bi bi-bag-check me-2"></i>
-                    <span>My Orders</span>
+                    <span> welcome   {{user.username}}
+                    </span>
                   </a>
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
+                  {% comment %} <a class="dropdown-item d-flex align-items-center" href="account.html">
                     <i class="bi bi-heart me-2"></i>
                     <span>My Wishlist</span>
-                  </a>
-                  <a class="dropdown-item d-flex align-items-center" href="account.html">
+                  </a> {% endcomment %}
+                  {% comment %} <a class="dropdown-item d-flex align-items-center" href="account.html">
                     <i class="bi bi-gear me-2"></i>
                     <span>Settings</span>
-                  </a>
+                  </a> {% endcomment %}
                 </div>
                 <div class="dropdown-footer">
-                  <a href="{% url "account:login" %}" class="btn btn-primary w-100 mb-2">Sign In</a>
-                  <a href="{% url "account:login" %}" class="btn btn-outline-primary w-100">Register</a>
+                  {% if not user.is_authenticated %}
+                  <a href="{% url "account:login" %}" class="btn btn-outline-primary w-100">Login</a>
+                  {%else%}
+                  {% comment %} <a href="{% url "account:logout" %}" class="btn btn-outline-secondary w-100">Logout</a> {% endcomment %}
+                  <form action="{% url "account:logout" %}" method="POST">
+                      {% csrf_token %}
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">logout</button>
+                       </form>
+                  {% endif %}
                 </div>
               </div>
             </div>
 
             <!-- Wishlist -->
-            <a href="account.html" class="header-action-btn d-none d-md-block">
+            {% comment %} <a href="account.html" class="header-action-btn d-none d-md-block">
               <i class="bi bi-heart"></i>
               <span class="badge">0</span>
-            </a>
+            </a> {% endcomment %}
 
             <!-- Cart -->
             <a href="{% url "cart:cart_list" %}" class="header-action-btn">
@@ -142,9 +176,8 @@
             <li><a href="{% url "home" %}" class="active">Home</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="{% url "product:home" %}">Category</a></li>
-            <li><a href="product-details.html">Product Details</a></li>
-            <li><a href="cart.html">Cart</a></li>
-            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="{% url "cart:cart_list" %}">Cart</a></li>
+            <li><a href="{% url "cart:order" %}">Checkout</a></li>
          
 
             <!-- Products Mega Menu 1 -->
@@ -153,49 +186,12 @@
               <!-- Products Mega Menu 1 Mobile View -->
               <ul class="mobile-megamenu">
 
-                <li><a href="#">Featured Products</a></li>
-                <li><a href="#">New Arrivals</a></li>
-                <li><a href="#">Sale Items</a></li>
-
+               
                 <li class="dropdown"><a href="#"><span>Clothing</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Men's Wear</a></li>
-                    <li><a href="#">Women's Wear</a></li>
-                    <li><a href="#">Kids Collection</a></li>
-                    <li><a href="#">Sportswear</a></li>
-                    <li><a href="#">Accessories</a></li>
-                  </ul>
+                  
                 </li>
 
-                <li class="dropdown"><a href="#"><span>Electronics</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Smartphones</a></li>
-                    <li><a href="#">Laptops</a></li>
-                    <li><a href="#">Audio Devices</a></li>
-                    <li><a href="#">Smart Home</a></li>
-                    <li><a href="#">Accessories</a></li>
-                  </ul>
-                </li>
-
-                <li class="dropdown"><a href="#"><span>Home &amp; Living</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Furniture</a></li>
-                    <li><a href="#">Decor</a></li>
-                    <li><a href="#">Kitchen</a></li>
-                    <li><a href="#">Bedding</a></li>
-                    <li><a href="#">Lighting</a></li>
-                  </ul>
-                </li>
-
-                <li class="dropdown"><a href="#"><span>Beauty</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Skincare</a></li>
-                    <li><a href="#">Makeup</a></li>
-                    <li><a href="#">Haircare</a></li>
-                    <li><a href="#">Fragrances</a></li>
-                    <li><a href="#">Personal Care</a></li>
-                  </ul>
-                </li>
+              
 
               </ul><!-- End Products Mega Menu 1 Mobile View -->
 
@@ -219,6 +215,23 @@
                   </ul>
                 </div>
 
+                {% comment %} for alert {% endcomment %}
+
+                <div id="customAlert" class="custom-alert">
+                      <p>🔔 Product not available - Product viewed!</p>
+                 </div>
+
+                 {% comment %} <div id="customAlert2" class="custom-alert" >
+                      <p>🔔 Product already ordered - Product viewed!</p>
+                 </div> {% endcomment %}
+
+
+                 {% comment %} <div id="sold" class="custom-alert">
+                      <p>🔔 Product sold - Product viewed!</p>
+                 </div>  {% endcomment %}
+
+
+
                 <!-- Tabs Content -->
                 <div class="megamenu-content tab-content">
 
@@ -232,7 +245,7 @@
                         <div class="product-info">
                           <h5>Premium Headphones</h5>
                           <p class="price">$129.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                       <div class="product-card">
@@ -242,7 +255,7 @@
                         <div class="product-info">
                           <h5>Smart Watch</h5>
                           <p class="price">$199.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                       <div class="product-card">
@@ -252,7 +265,7 @@
                         <div class="product-info">
                           <h5>Wireless Earbuds</h5>
                           <p class="price">$89.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                       <div class="product-card">
@@ -262,7 +275,7 @@
                         <div class="product-info">
                           <h5>Bluetooth Speaker</h5>
                           <p class="price">$79.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                     </div>
@@ -279,7 +292,7 @@
                         <div class="product-info">
                           <h5>Fitness Tracker</h5>
                           <p class="price">$69.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                       <div class="product-card">
@@ -290,7 +303,7 @@
                         <div class="product-info">
                           <h5>Wireless Charger</h5>
                           <p class="price">$39.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                       <div class="product-card">
@@ -301,7 +314,7 @@
                         <div class="product-info">
                           <h5>Smart Bulb Set</h5>
                           <p class="price">$49.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                       <div class="product-card">
@@ -312,7 +325,7 @@
                         <div class="product-info">
                           <h5>Portable Power Bank</h5>
                           <p class="price">$59.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                     </div>
@@ -329,7 +342,7 @@
                         <div class="product-info">
                           <h5>Wireless Keyboard</h5>
                           <p class="price"><span class="original-price">$89.99</span> $62.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                       <div class="product-card">
@@ -340,7 +353,7 @@
                         <div class="product-info">
                           <h5>Gaming Mouse</h5>
                           <p class="price"><span class="original-price">$59.99</span> $44.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                       <div class="product-card">
@@ -351,7 +364,7 @@
                         <div class="product-info">
                           <h5>Desk Lamp</h5>
                           <p class="price"><span class="original-price">$49.99</span> $29.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                       <div class="product-card">
@@ -362,57 +375,13 @@
                         <div class="product-info">
                           <h5>USB-C Hub</h5>
                           <p class="price"><span class="original-price">$39.99</span> $31.99</p>
-                          <a href="#" class="btn-view">View Product</a>
+                          <a href="#" class="btn-view" onclick="delayedAlert(event)">View Product</a>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <!-- Categories Tab -->
-                  <div class="tab-pane fade" id="category-content-1862" role="tabpanel" aria-labelledby="category-tab">
-                    <div class="category-grid">
-                      <div class="category-column">
-                        <h4>Clothing</h4>
-                        <ul>
-                          <li><a href="#">Men's Wear</a></li>
-                          <li><a href="#">Women's Wear</a></li>
-                          <li><a href="#">Kids Collection</a></li>
-                          <li><a href="#">Sportswear</a></li>
-                          <li><a href="#">Accessories</a></li>
-                        </ul>
-                      </div>
-                      <div class="category-column">
-                        <h4>Electronics</h4>
-                        <ul>
-                          <li><a href="#">Smartphones</a></li>
-                          <li><a href="#">Laptops</a></li>
-                          <li><a href="#">Audio Devices</a></li>
-                          <li><a href="#">Smart Home</a></li>
-                          <li><a href="#">Accessories</a></li>
-                        </ul>
-                      </div>
-                      <div class="category-column">
-                        <h4>Home &amp; Living</h4>
-                        <ul>
-                          <li><a href="#">Furniture</a></li>
-                          <li><a href="#">Decor</a></li>
-                          <li><a href="#">Kitchen</a></li>
-                          <li><a href="#">Bedding</a></li>
-                          <li><a href="#">Lighting</a></li>
-                        </ul>
-                      </div>
-                      <div class="category-column">
-                        <h4>Beauty</h4>
-                        <ul>
-                          <li><a href="#">Skincare</a></li>
-                          <li><a href="#">Makeup</a></li>
-                          <li><a href="#">Haircare</a></li>
-                          <li><a href="#">Fragrances</a></li>
-                          <li><a href="#">Personal Care</a></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+                  
 
                 </div>
 
@@ -466,5 +435,64 @@
 
   <!-- Vendor JS Files -->
   
+
+
+  <script>
+  function delayedAlert(event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    setTimeout(function() {
+      const alertBox = document.getElementById("customAlert");
+      alertBox.style.display = "block";
+
+      // Automatically hide after 3 seconds
+      setTimeout(function() {
+        alertBox.style.display = "none";
+      }, 3000);
+    }, 2000); // Show alert after 4 seconds
+  }
+</script>
+
+{% comment %} 
+<script>
+  function delayedAlert(event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    setTimeout(function() {
+      const alertBox = document.getElementById("customAlert2");
+      alertBox.style.display = "block";
+
+      // Automatically hide after 3 seconds
+      setTimeout(function() {
+        alertBox.style.display = "none";
+      }, 3000);
+    }, 2000); // Show alert after 4 seconds
+  }
+</script>
+
+
+
+<script>
+  function delayedAlert(event3) {
+    event3.preventDefault(); // Prevent default link behavior
+
+    setTimeout(function() {
+      const alertBox = document.getElementById("sold");
+      alertBox.style.display = "block";
+
+      // Automatically hide after 3 seconds
+      setTimeout(function() {
+        alertBox.style.display = "none";
+      }, 3000);
+    }, 2000); // Show alert after 4 seconds
+  }
+</script> {% endcomment %}
+
+
+
+
+
+
+
 
 </body>

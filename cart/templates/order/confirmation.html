@@ -1,0 +1,185 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block content %}
+<main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title light-background">
+      <div class="container d-lg-flex justify-content-between align-items-center">
+        <h1 class="mb-2 mb-lg-0">Order Confirmation</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="{% url "home" %}">Home</a></li>
+            <li class="current">Order Confirmation</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Order Confirmation Section -->
+    <section id="order-confirmation" class="order-confirmation section">
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="order-confirmation-3">
+          <div class="row g-0">
+            <!-- Left sidebar with order summary -->
+            <div class="col-lg-4 sidebar" data-aos="fade-right">
+              <div class="sidebar-content">
+                <!-- Success animation -->
+                <div class="success-animation">
+                  <i class="bi bi-check-lg"></i>
+                </div>
+
+                <!-- Order number and date -->
+                <div class="order-id">
+                  <h4>Order confirmed</h4>
+                  <div class="order-date"></div>  
+                  {% comment %} remember to update the order date dynamically {% endcomment %}
+                </div>
+
+                <!-- Order progress stepper -->
+                <div class="order-progress">
+                  <div class="stepper-container">
+                    <div class="stepper-item completed">
+                      <div class="stepper-icon">1</div>
+                      <div class="stepper-text">Confirmed</div>
+                    </div>
+                    <div class="stepper-item current">
+                      <div class="stepper-icon">2</div>
+                      <div class="stepper-text">Processing</div>
+                    </div>
+                    <div class="stepper-item">
+                      <div class="stepper-icon">3</div>
+                      <div class="stepper-text">Shipped</div>
+                    </div>
+                    <div class="stepper-item">
+                      <div class="stepper-icon">4</div>
+                      <div class="stepper-text">Delivered</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Price summary -->
+                {% comment %} <div class="price-summary">
+                  <h5>Order Summary</h5>
+                  <ul class="summary-list">
+                    <li>
+                      <span>Subtotal</span>
+                      <span>$219.97</span>
+                    </li>
+                    <li>
+                      <span>Shipping</span>
+                      <span>$0.00</span>
+                    </li>
+                    <li>
+                      <span>Tax</span>
+                      <span>$18.70</span>
+                    </li>
+                    <li class="total">
+                      <span>Total</span>
+                      <span>${{total_price}}</span>
+                    </li>
+                  </ul>
+                </div> {% endcomment %}
+
+                <!-- Delivery info -->
+                <div class="delivery-info">
+                  <h5>Delivery Information</h5>
+                  <p class="delivery-estimate">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>Estimated delivery: 4 working days</span>
+                  </p>
+                  <p class="shipping-method">
+                    <i class="bi bi-truck"></i>
+                    <span>Free Shipping</span>
+                  </p>
+                </div>
+
+                <!-- Customer service -->
+                <div class="customer-service">
+                  <h5>Need Help?</h5>
+                  <a href="#" class="help-link">
+                    <i class="bi bi-chat-dots"></i>
+                    <span>Contact Support</span>
+                  </a>
+                  <a href="#" class="help-link">
+                    <i class="bi bi-question-circle"></i>
+                    <span>FAQs</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main content area -->
+            <div class="col-lg-8 main-content" data-aos="fade-in">
+              <!-- Thank you message -->
+              <div class="thank-you-message">
+                <h1>Thanks for your order!</h1>
+                <p>We've received your order and will begin processing it right away.
+                  We'll send you updates via email as your order progresses.</p>
+              </div>
+
+              <!-- Shipping details -->
+              
+
+              <!-- Payment details -->
+              <div class="details-card" data-aos="fade-up">
+                <div class="card-header" data-toggle="collapse">
+                  <h3>
+                    <i class="bi bi-credit-card"></i>
+                    Payment Details
+                  </h3>
+                  <i class="bi bi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="card-body">
+                  <div class="payment-method">
+                    <div class="payment-icon">
+                      <i class="bi bi-credit-card-2-front"></i>
+                    </div>
+                    <div class="payment-details">
+                      <div class="card-type">American Express</div>
+                      <div class="card-number">•••• •••• •••• 3782</div>
+                    </div>
+                  </div>
+                  <div class="billing-address mt-4">
+                    <h5>Billing Address</h5>
+                    <p>Same as shipping address</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Order items -->
+             
+
+            <!-- Action buttons -->
+            <div class="action-area" data-aos="fade-up">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <a href="{% url 'product:home' %}" class="btn btn-back">
+                    <i class="bi bi-arrow-left"></i>
+                    Return to Shop
+                  </a>
+                </div>
+                <div class="col-md-6">
+                  <a href="#" class="btn btn-account">
+                    <span>View in Account</span>
+                    <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recommended products -->
+            
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+    </section><!-- /Order Confirmation Section -->
+
+  </main>
+{% endblock content %}
+

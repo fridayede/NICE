@@ -200,13 +200,45 @@
                         I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
                       </label>
                     </div>
-                    <div class="success-message d-none">Your order has been placed successfully! Thank you for your purchase.</div>
-                    <div class="place-order-container">
-                      <button type="submit" class="btn btn-primary place-order-btn">
-                        <span class="btn-text">Place Order</span>
-                        <span class="btn-price">${{order.total_price }}</span>
-                      </button>
+                    <div class="success-message d-none">Your order has been placed successfully! Thank you for your purchase.
+                       {% comment %} <form action="{% url 'cart:confirmation' %}" method="POST" class="place-order-form">
+                        {% csrf_token %}
+
+                         <input type="hidden" name="order_id" value="{{ order.id }}">
+
+                        <button  class="btn btn-primary place-order-btn">
+                          <span class="btn-text">Place Orderll</span>
+                          <span class="btn-price">${{ order.total_price }}</span>
+                        </button>
+                      </form> {% endcomment %}
+                      {% comment %} <a href="{% url 'orderconfirmation' order.id %}?order_id={{ order.id }}">Confirm Order</a> {% endcomment %}
+
                     </div>
+                    <div class="place-order-container">
+                      {% comment %} <form action="{% url 'cart:confirmation' %}" method="POST" class="place-order-form">
+                        {% csrf_token %}
+
+                        <button type="submit" class="btn btn-primary place-order-btn">
+                          <span class="btn-text">Place Order</span>
+                          <span class="btn-price">${{ order.total_price }}</span>
+                        </button>
+                      </form> {% endcomment %}
+                      
+
+                     <form action="{% url "cart:confirmation" order.id %}" method="POST" class="place-order-form">
+                        {% csrf_token %}
+
+                          <input type="hidden" name="order_id" value="{{ order.id }}">
+                        <button  class="btn btn-primary place-order-btn">
+                          <span class="btn-text">Place Orderll</span>
+                          <span class="btn-price">${{ order.total_price }}</span>
+                        </button>
+                      </form> 
+                      <div>
+                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                        <a href="{% url "cart:confirmation" order.id %}">Confirm Order</a>
+                      </div>
+
                   </div>
                 </div>
               </form>
@@ -340,58 +372,6 @@
 
   </main>
 
-  <footer id="footer" class="footer dark-background">
-    
-
-    <div class="footer-bottom">
-      <div class="container">
-        <div class="row gy-3 align-items-center">
-          <div class="col-lg-6 col-md-12">
-            <div class="copyright">
-              <p>© <span>Copyright</span> <strong class="sitename">FRUITKHA</strong>. All Rights Reserved.</p>
-            </div>
-            <div class="credits mt-1">
-              <!-- All the links in the footer should remain intact. -->
-              <!-- You can delete the links only if you've purchased the pro version. -->
-              <!-- Licensing information: https://bootstrapmade.com/license/ -->
-              <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-              Designed by <a href="https://bootstrapmade.com/">EDEH COLLINS</a>
-            </div>
-        </div>
-          <div class="col-lg-6 col-md-12">
-            <div class="d-flex flex-wrap justify-content-lg-end justify-content-center align-items-center gap-4">
-              <div class="payment-methods">
-                <div class="payment-icons">
-                  <i class="bi bi-credit-card" aria-label="Credit Card"></i>
-                  <i class="bi bi-paypal" aria-label="PayPal"></i>
-                  <i class="bi bi-apple" aria-label="Apple Pay"></i>
-                  <i class="bi bi-google" aria-label="Google Pay"></i>
-                  <i class="bi bi-shop" aria-label="Shop Pay"></i>
-                  <i class="bi bi-cash" aria-label="Cash on Delivery"></i>
-                </div>
-              </div>
-
-              <div class="legal-links">
-                <a href="tos.html">Terms</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="tos.html">Cookies</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </footer>
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
- 
  
 {% endblock content %}
 

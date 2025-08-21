@@ -98,14 +98,14 @@
               
 
                 <div class="action-buttons">
-                  <form action="{% url "cart:add_cart" %}" method="POST" >
+                  {% comment %} <form action="{% url "cart:add_cart" %}" method="POST" >
                     {% csrf_token %}
                      <input type="text"hidden name="product-id" value="{{product.id}}" name="product-id">
                     <button class="btn primary-action">
                     <i class="bi bi-bag-plus"></i>
                     Add to Cart 
                   </button>
-                </form>
+                </form> {% endcomment %}
                  
                 </div>
               </div>
