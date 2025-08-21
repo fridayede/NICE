@@ -81,7 +81,6 @@ def cart_list(request):
         print("No items in cart")
         # return redirect('cart:cart_list')
         return render(request, 'index.html', {'message': 'Your cart is empty.'})
-
         # return render(request, 'product/product/index.html', {'error': 'No items in cart'})
     for cart_item in cart_items:
         cart_item.total_price = cart_item.product.price * cart_item.quantity
